@@ -25,10 +25,78 @@
   flex-direction: column;
   position: absolute;
   bottom: 0%;
-  background: rgb(255, 255, 255);
+  background: rgb(175, 99, 99);
+  opacity: 0;
   padding: 1rem;
+  pointer-events: none;
   width: 80%;
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
   transform: translateY(100px);
+  transition: all 0.3s ease-in-out;
+}
+
+.slider.active{
+  opacity: 1;
+  transform: translateY(0px);
+  pointer-events: all;
+}
+
+.sliders button{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border: none;
+  background: rgb(73, 73, 73);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.controls{
+  display: flex;
+  flex-direction: column;
+}
+
+.panel{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.panel{
+
+  button{
+    font-size: 1.2rem;
+    margin: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border: none;
+    background:rgb(73, 73, 73);
+    color: white;
+  }
+
+  p{
+    font-size: 1.2rem;
+  }
+
+} 
+
+.library-panel,
+.generate-panel,
+.save-panel{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.adjust,
+.lock{
+  font-size: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 2rem 0rem;
 }
