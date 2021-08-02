@@ -14,12 +14,40 @@ function generateHex() {
 function randomColors() {
   colorDivs.forEach((div, index) => {
     const hexText = div.children[0];
-    const randomColors = generateHex();
+    const randomColor = generateHex();
 
-    div.style.backgroundColor = randomColors;
-    hexText.innerText = randomColors;
+    div.style.backgroundColor = randomColor;
+    hexText.innerText = randomColor;
+    checkContrast(randomColor, hexText);
 
+    const color = chroma(randomColor);
+    const sliders = div.querySelectorAll('.sliders input');
+    console.log(sliders[0]);
+    const hue = sliders[0];
+    const brightness = sliders[1];
+    const saturation = sliders[2];
+
+    colorizeSliders(color, hue, brightness, saturation);
   });
+}
+
+function checkContrast(color, text) {
+  const luminance = chroma(color).luminance();
+  if (luminance > 0.5) {
+    text.style.color = "black";
+  } else {
+    text.style.color = "white";
+  }
+}
+
+function colorizeSliders(color, hue, brightness, saturation) {
+
+  const noSat = color.set('hsl.s', 0);
+  const fullSat = color.set('hsl.s', 1);
+
+  const scaleSat = chroma.scale([noSat, color, fullSat]);
+  console.log(scaleSat);
+  saturation.style.backgroundImage = `linear-gradient(to right,${scaleSat(0)}, ${scaleSat(1)})`;
 }
 
 randomColors();
