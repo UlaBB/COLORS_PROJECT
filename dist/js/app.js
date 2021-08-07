@@ -12,10 +12,12 @@ sliders.forEach(slider =>{
 });
 
 colorDivs.forEach((div, index) => {
-  div.addEventListener('change', ()=>{
+  div.addEventListener('change', () => {
     updateTextUI(index);
   });
 });
+
+
 
 function generateHex() {
   const hexColor = chroma.random();
@@ -70,7 +72,6 @@ function hlsControls(e){
  
 
   let sliders = e.target.parentElement.querySelectorAll('input[type="range"]');
-  console.log(sliders);
 
   const hue = sliders[0];
   const brightness = sliders[1];
@@ -83,13 +84,20 @@ function hlsControls(e){
     .set('hsl.l', brightness.value)
     .set('hsl.h', hue.value);
 
-  colorDivs[index].style.backgroundColor =color;
+  colorDivs[index].style.backgroundColor = color;
 }
 
 function updateTextUI(index){
   const activeDiv = colorDivs[index];
-  console.log('active:',activeDiv);
-  const color = chroma(activeDiv.style.backgroundColor)
+  const color = chroma(activeDiv.style.backgroundColor);
+  const textHex = activeDiv.querySelector('h2');
+  const icons = activeDiv.querySelectorAll('.controls button');
+
+  textHex.innerText = color.hex(); // automatically sets the mode to rgba
+  checkContrast(color, textHex);
+  for(let icon of icons){
+    checkContrast(color, icon);
+  }
 
 }
 
