@@ -5,6 +5,9 @@ const sliders = document.querySelectorAll('input[type = "range"]');
 const currentHexes = document.querySelectorAll('.color h2');
 const allSliders = document.querySelectorAll('.sliders input');
 const popUp = document.querySelector('.copy-container');
+const adjustBtn = document.querySelectorAll('.adjust');
+const adjustCloseBtn = document.querySelectorAll('.close-adjustment');
+const sliderContainers = document.querySelectorAll('.sliders');
 let initialColors;
 
 
@@ -31,6 +34,12 @@ popUp.addEventListener('transitionend', () =>{
   popUpBox.classList.remove('active');
 });
 
+
+adjustBtn.forEach((btn, index) =>{
+  btn.addEventListener('click', ()=>{
+    openAdjustmentPanel(index);
+  });
+});
 
 
 function generateHex() {
@@ -157,6 +166,14 @@ function copyToClipBoard(hex){
   console.log(popUpBox);
   popUp.classList.add('active');
   popUpBox.classList.add('active');
+}
+
+function openAdjustmentPanel(index){
+  console.log('jest');
+  sliderContainers[index].classList.toggle('active');
+  sliderContainers[index].children[0].addEventListener('click', ()=>{
+    sliderContainers[index].classList.remove('active');
+  });
 }
 
 randomColors();
