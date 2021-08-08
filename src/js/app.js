@@ -44,6 +44,12 @@ adjustBtn.forEach((btn, index) =>{
   });
 });
 
+lockBtn.forEach((btn,index) =>{
+  btn.addEventListener('click', (e)=>{
+    addLockClass(e,index);
+  });
+});
+
 
 function generateHex() {
   const hexColor = chroma.random();
@@ -179,11 +185,21 @@ function copyToClipBoard(hex){
 }
 
 function openAdjustmentPanel(index){
-  console.log('jest');
   sliderContainers[index].classList.toggle('active');
   sliderContainers[index].children[0].addEventListener('click', ()=>{
     sliderContainers[index].classList.remove('active');
   });
 }
+
+function addLockClass(e,index){
+  colorDivs[index].classList.toggle('locked');
+  if(colorDivs[index].classList.contains('locked')){
+    e.target.innerHTML = '<i class="fas fa-lock"></i>';
+  }
+  else{
+    e.target.innerHTML = '<i class="fas fa-lock-open"></i>';
+  }
+}
+
 
 randomColors();
