@@ -63,6 +63,8 @@ saveBtn.addEventListener('click', openPallete);
 
 closeSave.addEventListener('click', closePalette);
 
+submitSaveBtn.addEventListener('click', savePallete);
+
 
 function generateHex() {
   const hexColor = chroma.random();
@@ -139,7 +141,6 @@ function hlsControls(e){
   const saturation = sliders[2];
 
   const bgColor = initialColors[index];
-  console.log(bgColor);
 
   let color = chroma(bgColor)
     .set('hsl.s', saturation.value)
@@ -167,7 +168,6 @@ function updateTextUI(index){
 
 function resetInputs() {
   const sliders = document.querySelectorAll(".sliders input");
-  console.log(sliders);
   sliders.forEach((slider) => {
     if (slider.name === "hue") {
       const hueColor = initialColors[slider.getAttribute("data-hue")];
@@ -221,7 +221,6 @@ function addLockClass(e,index){
 }
 
 function openPallete(){
-  console.log('dziala');
   saveContainer.classList.add('active');
   savePopup.classList.add('active');
 }
@@ -231,7 +230,32 @@ function closePalette(){
   savePopup.classList.remove('active');
 }
 
+function savePallete(){
+  closePalette();
+  const name = saveInput.value;
+  const colors = [];
+  currentHexes.forEach(hex =>{
+    colors.push(hex.innerText);
+  });
+  let palletteNr = savedPallete.length;
+  const paletteObj = {name, colors, nr: palletteNr};
+  savedPallete.push(paletteObj);
+  console.log(savedPallete);
+  //save to LocalStorage
+  saveToLocal(paletteObj);
+  saveInput.value = '';
+}
 
+function saveToLocal(paletteObj){
+  let localPalettes;
+  if(localStorage.getItem('palettes') === null){
+    localPalettes = [];
+  }else{
+    localPalettes= JSON.parse(localStorage.getItem("palettes"));
+  }
+  localPalettes.push(paletteObj);
+  localStorage.setItem('palettes', JSON.stringify(localPalettes));
+}
 
 
 //Implement saved pallete and local storage
