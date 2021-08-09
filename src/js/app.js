@@ -3,14 +3,23 @@ const colorDivs = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type = "range"]');
 const currentHexes = document.querySelectorAll('.color h2');
-const allSliders = document.querySelectorAll('.sliders input');
+//const allSliders = document.querySelectorAll('.sliders input');
 const popUp = document.querySelector('.copy-container');
 const adjustBtn = document.querySelectorAll('.adjust');
 const lockBtn = document.querySelectorAll('.lock');
-const adjustCloseBtn = document.querySelectorAll('.close-adjustment');
+//const adjustCloseBtn = document.querySelectorAll('.close-adjustment');
 const sliderContainers = document.querySelectorAll('.sliders');
+const saveBtn = document.querySelector('.save');
+const submitSaveBtn = document.querySelector('.submit-save');
+const closeSave = document.querySelector('.close-save');
+const saveContainer = document.querySelector('.save-container');
+const savePopup = document.querySelector('.save-popup');
+const saveInput = document.querySelector('.save-container input');
+
 let initialColors;
 
+//This is for local storage
+let savedPallete = [];
 
 //Add eventListeners
 generateBtn.addEventListener('click', randomColors);
@@ -50,6 +59,10 @@ lockBtn.forEach((btn,index) =>{
   });
 });
 
+saveBtn.addEventListener('click', openPallete);
+
+closeSave.addEventListener('click', closePalette);
+
 
 function generateHex() {
   const hexColor = chroma.random();
@@ -62,7 +75,13 @@ function randomColors() {
   colorDivs.forEach((div, index) => {
     const hexText = div.children[0];
     const randomColor = generateHex();
-    initialColors.push(chroma(randomColor).hex());
+
+    if(div.classList.contains("locked")){
+      initialColors.push(hexText.innerText);
+      return;
+    }else{
+      initialColors.push(chroma(randomColor).hex());
+    }
 
     div.style.backgroundColor = randomColor;
     hexText.innerText = randomColor;
@@ -200,6 +219,22 @@ function addLockClass(e,index){
     e.target.innerHTML = '<i class="fas fa-lock-open"></i>';
   }
 }
+
+function openPallete(){
+  console.log('dziala');
+  saveContainer.classList.add('active');
+  savePopup.classList.add('active');
+}
+
+function closePalette(){
+  saveContainer.classList.remove('active');
+  savePopup.classList.remove('active');
+}
+
+
+
+
+//Implement saved pallete and local storage
 
 
 randomColors();
