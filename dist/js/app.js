@@ -171,23 +171,46 @@ function updateTextUI(index){
 
 }
 
+// function resetInputs() {
+
+  
+//   const sliders = document.querySelectorAll('.sliders input');
+//   sliders.forEach((slider) => {
+//     if (slider.name === 'hue') {
+//       const hueColor = initialColors[slider.getAttribute('data-hue')];
+//       const hueValue = chroma(hueColor).hsl()[0];
+//       slider.value = Math.floor(hueValue);
+//     }
+//     if (slider.name === 'brighntess') {
+//       const brightColor = initialColors[slider.getAttribute('data-bright')];
+//       const brightValue = chroma(brightColor).hsl()[2];
+//       slider.value = Math.floor(brightValue * 100) /100;
+//     }
+//     if (slider.name === 'saturation') {
+//       const satColor = initialColors[slider.getAttribute('data-sat')];
+//       const satValue = chroma(satColor).hsl()[1];
+//       slider.value = Math.floor(satValue * 100) /100;
+//     }
+//   });
+// }
+
 function resetInputs() {
-  const sliders = document.querySelectorAll('.sliders input');
+  const sliders = document.querySelectorAll(".sliders input");
   sliders.forEach((slider) => {
-    if (slider.name === 'hue') {
-      const hueColor = initialColors[slider.getAttribute('data-hue')];
+    if (slider.name === "hue") {
+      const hueColor = initialColors[slider.getAttribute("data-hue")];
       const hueValue = chroma(hueColor).hsl()[0];
       slider.value = Math.floor(hueValue);
     }
-    if (slider.name === 'brighntess') {
-      const brightColor = initialColors[slider.getAttribute('data-bright')];
+    if (slider.name === "brightness") {
+      const brightColor = initialColors[slider.getAttribute("data-bright")];
       const brightValue = chroma(brightColor).hsl()[2];
-      slider.value = Math.floor(brightValue * 100) /100;
+      slider.value = Math.floor(brightValue * 100) / 100;
     }
-    if (slider.name === 'saturation') {
-      const satColor = initialColors[slider.getAttribute('data-sat')];
+    if (slider.name === "saturation") {
+      const satColor = initialColors[slider.getAttribute("data-sat")];
       const satValue = chroma(satColor).hsl()[1];
-      slider.value = Math.floor(satValue * 100) /100;
+      slider.value = Math.floor(satValue * 100) / 100;
     }
   });
 }
@@ -240,7 +263,16 @@ function savePallete(){
   currentHexes.forEach(hex =>{
     colors.push(hex.innerText);
   });
-  let palletteNr = savedPallete.length;
+  let palletteNr;
+
+  const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
+  if(paletteObjects){
+    palletteNr= paletteObjects.length;
+  } else {
+    palletteNr= savedPallete.length;
+  }
+
+
   const paletteObj = {name, colors, nr: palletteNr};
   savedPallete.push(paletteObj);
   console.log(savedPallete);
@@ -268,11 +300,27 @@ function savePallete(){
   paletteBtn.classList.add(paletteObj.nr);
   paletteBtn.innerText='Select';
 
+  
+
+  paletteBtn.addEventListener('click', (e) =>{
+    closeLibrary();
+    const paletteIndex = e.target.classList[1];
+
+    initialColors = [];
+    savedPallete[paletteIndex].colors.forEach((color, index) =>{
+      initialColors.push(color);
+      colorDivs[index].style.backgroundColor = color;
+      const text = colorDivs[index].children[0];
+      checkContrast(color, text);
+      updateTextUI(index);
+    });
+    resetInputs();
+  });
+
   palette.appendChild(title);
   palette.appendChild(preview);
   palette.appendChild(paletteBtn);
   libraryContainer.children[0].appendChild(palette);
-
 }
 
 function saveToLocal(paletteObj){
@@ -298,7 +346,58 @@ function closeLibrary(){
   libraryPopup.classList.remove('active');
 }
 
+
+function getLocal(){
+  
+  if(localStorage.getItem('palettes') === null){
+    localPalettes = [];
+  }else{
+    const paletteObjects= JSON.parse(localStorage.getItem('palettes'));
+    savedPallete = [...paletteObjects];
+
+    paletteObjects.forEach(paletteObj =>{
+      const palette = document.createElement('div');
+      palette.classList.add('customPalette');
+
+      const title = document.createElement('h4');
+      title.innerText = paletteObj.name;
+
+      const preview = document.createElement('div');
+      preview.classList.add('preview');
+      paletteObj.colors.forEach(smallColor => {
+        const smallDiv = document.createElement('div');
+        smallDiv.style.backgroundColor = smallColor;
+        preview.appendChild(smallDiv);
+      });
+
+      const paletteBtn = document.createElement('button');
+      paletteBtn.classList.add('pick-paletteBtn');
+      paletteBtn.classList.add(paletteObj.nr);
+      paletteBtn.innerText='Select';
+
+      paletteBtn.addEventListener('click', (e) =>{
+        closeLibrary();
+        const paletteIndex = e.target.classList[1];
+        initialColors = [];
+        paletteObjects[paletteIndex].colors.forEach((color, index) =>{
+          initialColors.push(color);
+          colorDivs[index].style.backgroundColor = color;
+          const text = colorDivs[index].children[0];
+          checkContrast(color, text);
+          updateTextUI(index);
+        });
+        resetInputs();
+      });
+      palette.appendChild(title);
+      palette.appendChild(preview);
+      palette.appendChild(paletteBtn);
+      libraryContainer.children[0].appendChild(palette);
+    });
+  }
+}
+
 //Implement saved pallete and local storage
 
-
+getLocal();
 randomColors();
+
