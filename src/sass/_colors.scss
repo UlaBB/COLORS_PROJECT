@@ -15,45 +15,9 @@
   overflow: hidden;
 
   h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
   }
-}
-
-.sliders {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 0%;
-  background: rgb(255, 255, 255);
-  opacity: 0;
-  padding: 1rem;
-  pointer-events: none;
-  width: 80%;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
-  transform: translateY(100px);
-  transition: all 0.5s ease-in-out;
-}
-
-.sliders.active {
-  opacity: 1;
-  transform: translateY(0px);
-  pointer-events: all;
-}
-
-.sliders button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0.5rem;
-  border-top-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-  border: none;
-  background: rgb(73, 73, 73);
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
 }
 
 .controls {

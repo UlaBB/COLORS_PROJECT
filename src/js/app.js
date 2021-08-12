@@ -1,4 +1,9 @@
 
+
+import { Colors } from "./Components/colors.js";
+
+const color = new Colors;
+
 const colorDivs = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type = "range"]');
@@ -397,6 +402,7 @@ function getLocal(){
 }
 
 //Implement saved pallete and local storage
+
 
 getLocal();
 randomColors();
