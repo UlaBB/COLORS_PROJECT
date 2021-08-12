@@ -1,3 +1,4 @@
+/* global chroma */
 
 export class Colors {
 
