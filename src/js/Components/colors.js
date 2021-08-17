@@ -7,7 +7,6 @@ export class Colors {
     this.getElements();
     this.renderColor();
     this.initSliders();
-    this.initCopyClipboard();
   }
 
   getElements(){
@@ -15,7 +14,6 @@ export class Colors {
     this.sliders = document.querySelectorAll('input[type=range]');
     this.initialsColors;
     this.currentHexes = document.querySelectorAll('.color h2');
-    this.popUp = document.querySelector('.copy-container');
   }
 
   generateHex(){
@@ -111,26 +109,6 @@ export class Colors {
     });
   }
 
-  initCopyClipboard(){
-    this.currentHexes.forEach(hex =>{
-      hex.addEventListener('click', ()=>{
-        this.copyToClipBoard(hex, this.popUp);
-      });
-    });
-  }
-
-  copyToClipBoard(hex, popUp){
-    const el = document.createElement('textarea');
-    el.value = hex.innerText;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    const popUpBox = popUp.children[0];
-    popUp.classList.add('active');
-    popUpBox.classList.add('active');
-  }
-
   updateTextUi (index) {
     const activeDiv = this.colorDivs[index];
     const color = chroma(activeDiv.style.backgroundColor);
@@ -148,18 +126,18 @@ export class Colors {
   resetInputs(){
     const sliders = document.querySelectorAll('.sliders input');
     sliders.forEach(slider =>{
-      if(slider.name === "hue"){
-        const hueColor = this.initialsColors[slider.getAttribute("data-hue")];
+      if(slider.name === 'hue'){
+        const hueColor = this.initialsColors[slider.getAttribute('data-hue')];
         const hueValue = chroma(hueColor).hsl()[0];
         slider.value = Math.floor(hueValue);
       }
-      if(slider.name ==="brighntess"){
-        const brightColor = this.initialsColors[slider.getAttribute("data-bright")];
+      if(slider.name ==='brighntess'){
+        const brightColor = this.initialsColors[slider.getAttribute('data-bright')];
         const brightValue = chroma(brightColor).hsl()[2];
         slider.value = (Math.floor(brightValue * 100)/100);
       }
-      if(slider.name ==="saturation"){
-        const satColor = this.initialsColors[slider.getAttribute("data-sat")];
+      if(slider.name ==='saturation'){
+        const satColor = this.initialsColors[slider.getAttribute('data-sat')];
         const satValue = chroma(satColor).hsl()[1];
         slider.value = (Math.floor(satValue * 100)/100);
       }
