@@ -7,6 +7,9 @@ export class Colors {
     this.getElements();
     this.renderColor();
     this.initSliders();
+    this.openCloseSliders();
+    this.generateColors();
+    this.initLock();
   }
 
   getElements(){
@@ -14,6 +17,12 @@ export class Colors {
     this.sliders = document.querySelectorAll('input[type=range]');
     this.initialsColors;
     this.currentHexes = document.querySelectorAll('.color h2');
+    this.adjustmentBtns = document.querySelectorAll('.adjust');
+    this.closeAdjustBtn = document.querySelectorAll('.close-adjustment');
+    this.lockBtns = document.querySelectorAll('.lock');
+    this.sliderContainer = document.querySelectorAll('.sliders');
+    this.generateBtn = document.querySelector('.generate');
+    this.lockBtns = document.querySelectorAll('.lock');
   }
 
   generateHex(){
@@ -21,20 +30,37 @@ export class Colors {
     return HexColor;
   }
 
+  generateColors(){
+    this.generateBtn.addEventListener('click', ()=>{
+      this.renderColor();
+    });
+  }
+
   renderColor(){
-
     this.initialsColors =[];
-
     this.colorDivs.forEach(div =>{
       const hexText = div.children[0];
       const randomColor = this.generateHex();
 
-      this.initialsColors.push(chroma(randomColor).hex());
+      if(div.classList.contains('locked')){
+        this.initialsColors.push(hexText.innerText);
+        return;
+      }else{
+        this.initialsColors.push(chroma(randomColor).hex());
+      }
+
+
+      const icons = div.querySelectorAll('.controls button');
+
 
       div.style.backgroundColor = randomColor;
       hexText.innerText = randomColor;
 
       this.checkContrast(randomColor, hexText);
+
+      for(let icon of icons){
+        this.checkContrast(randomColor, icon);
+      }
 
       const color = chroma(randomColor);
 
@@ -82,9 +108,9 @@ export class Colors {
 
     this.sliders.forEach(slider =>{
       slider.addEventListener('input', (e)=>{
-        const index = e.target.getAttribute('data-bright')|| e.target.getAttribute('data-hue')|| e.target.getAttribute('data-sat');
+        let index = e.target.getAttribute('data-bright')|| e.target.getAttribute('data-hue')|| e.target.getAttribute('data-sat');
 
-        let sliders = e.target.parentElement.querySelectorAll('input[type="range"]');
+        const sliders = e.target.parentElement.querySelectorAll('input[type="range"]');
         const hue = sliders[0];
         const brightness = sliders[1];
         const saturation = sliders[2];
@@ -106,6 +132,36 @@ export class Colors {
       div.addEventListener('change', ()=>{
         this.updateTextUi(index);
       });
+    });
+  }
+
+  initLock(){
+    this.lockBtns.forEach(btn =>{
+      btn.addEventListener('click', (e)=>{
+        const index = btn.getAttribute('data-btn');
+        this.colorDivs[index].classList.toggle('locked');
+        if(this.colorDivs[index].classList.contains('locked')){
+          e.target.innerHTML = '<i class="fas fa-lock"></i>';
+        }else{
+          e.target.innerHTML = '<i class="fas fa-lock-open"></i>';
+        }
+      });
+    });
+  }
+
+  openCloseSliders(){
+    this.adjustmentBtns.forEach(btn =>{
+      btn.addEventListener('click', ()=>{
+        const index= btn.getAttribute('data-btn');
+        this.openCloseAdjustContainer(index);
+      });
+    });
+  }
+
+  openCloseAdjustContainer(index){
+    this.sliderContainer[index].classList.toggle('active');
+    this.sliderContainer[index].children[0].addEventListener('click',()=>{
+      this.sliderContainer[index].classList.remove('active');
     });
   }
 

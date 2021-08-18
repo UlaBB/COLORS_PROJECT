@@ -23,6 +23,7 @@
 .controls {
   display: flex;
   flex-direction: column;
+  margin-bottom: 150px;
 }
 
 .panel {
@@ -39,6 +40,7 @@
     border: none;
     background: rgb(73, 73, 73);
     color: white;
+    cursor: pointer;
   }
 
   p {
@@ -57,11 +59,11 @@
 
 .adjust,
 .lock {
-  font-size: 2rem;
+  font-size: 1.7rem;
   border: none;
   background: none;
   cursor: pointer;
-  margin: 2rem 0rem;
+  margin: 1rem 0rem;
 }
 
 // .save,
