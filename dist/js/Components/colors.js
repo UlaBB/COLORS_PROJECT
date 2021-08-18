@@ -36,6 +36,10 @@ export class Colors {
     });
   }
 
+  clearColors(){
+    return this.initialsColors = [];
+  }
+
   renderColor(){
     this.initialsColors =[];
     this.colorDivs.forEach(div =>{
@@ -152,6 +156,7 @@ export class Colors {
   openCloseSliders(){
     this.adjustmentBtns.forEach(btn =>{
       btn.addEventListener('click', ()=>{
+        console.log('cos');
         const index= btn.getAttribute('data-btn');
         this.openCloseAdjustContainer(index);
       });
