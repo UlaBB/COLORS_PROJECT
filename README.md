@@ -1,4 +1,4 @@
-<h1>About the project</h1>
+#About the project
 Clone of coolors.co using HTML5, CSS3, JavaScript.
 
 <h1>Technologies Used</h1>
