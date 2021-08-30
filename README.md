@@ -1,12 +1,36 @@
-#<h1>About the project</h1>
+# About the project
+
 Clone of coolors.co using HTML5, CSS3, JavaScript.
 
-<h1>Technologies Used</h1>
-<ul>
-    <li>HTML5</li>
-    <li>CSS5</li>
-    <li>JavaScript</li>
-    <li>chroma.js</li>
-</ul>
+#
 
-<h1>Features</h1>
+# Technologies Used
+
+- HTML5
+- CSS5
+- JavaScript
+- chroma.js
+
+#
+
+# Features
+
+- Generate a default color palette.
+
+![](https://github.com/UlaBB/COLORS_PROJECT/blob/master/src/images/forGithubReadme/Coolors_readme_1.gif)
+
+- Adjust hue, brightness and saturation of color.
+
+![](https://github.com/UlaBB/COLORS_PROJECT/blob/master/src/images/forGithubReadme/Coolors_readme_2.gif)
+
+- Lock one or more colors.
+
+![](https://github.com/UlaBB/COLORS_PROJECT/blob/master/src/images/forGithubReadme/Coolors_readme_3.gif)
+
+- Save pallete to library.
+
+![](https://github.com/UlaBB/COLORS_PROJECT/blob/master/src/images/forGithubReadme/Coolors_readme_3.gif)
+
+- Pick a pallete from library
+
+![](https://github.com/UlaBB/COLORS_PROJECT/blob/master/src/images/forGithubReadme/Coolors_readme_3.gif)
