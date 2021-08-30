@@ -32,3 +32,5 @@ Clone of coolors.co using HTML5, CSS3, JavaScript.
 ![](https://github.com/UlaBB/COLORS_PROJECT/blob/master/src/images/forGithubReadme/Coolors_readme_4.gif)
 
 - Pick a pallete from library
+
+![](https://github.com/UlaBB/COLORS_PROJECT/blob/master/src/images/forGithubReadme/Coolors_readme_5.gif)
